@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>回収率シミュレーター</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#050505;
+ color:white;
+ font-family:-apple-system,BlinkMacSystemFont,"Yu Gothic",sans-serif;
+}
+main{
+ max-width:1200px;
+ margin:auto;
+ padding:18px 14px 35px;
+}
+h1{
+ margin:5px 0;
+ font-size:38px;
+}
+.sub{
+ font-size:18px;
+ font-weight:bold;
+ margin-bottom:22px;
+}
+.sub span{color:#ff9d00}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:14px;
+}
+
+.card{
+ background:#000;
+ border:1px solid #333;
+}
+.card h2{
+ margin:0;
+ padding:10px;
+ text-align:center;
+ font-size:19px;
+}
+.desc{
+ text-align:center;
+ padding:9px;
+ font-size:13px;
+ min-height:58px;
+}
+
+.row{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ min-height:64px;
+}
+.label{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-weight:bold;
+ font-size:17px;
+}
+.input{
+ display:flex;
+ align-items:center;
+ background:white;
+ color:black;
+ padding:6px;
+}
+input{
+ width:100%;
+ min-width:0;
+ border:0;
+ outline:0;
+ text-align:center;
+ font-size:19px;
+ font-weight:bold;
+ background:white;
+}
+.unit{
+ font-weight:bold;
+ white-space:nowrap;
+}
+
+.blue h2,.blue .label{background:#084b87}
+.green h2,.green .label{background:#286318}
+.purple h2,.purple .label{background:#1111e8}
+.red h2,.red .label{background:#a00000}
+
+.result{
+ margin-top:16px;
+ background:white;
+ color:black;
+ text-align:center;
+}
+.result-title{
+ padding:6px;
+ border-bottom:1px solid #888;
+ font-weight:bold;
+}
+.answer{
+ padding:11px;
+ font-size:28px;
+ font-weight:900;
+}
+.blue .answer{color:#084b87}
+.green .answer{color:#17651c}
+.purple .answer{color:#16166f}
+.red .answer{color:#701010}
+
+.info{
+ margin-top:20px;
+ padding:15px;
+ border:1px solid #24495e;
+ border-radius:12px;
+ background:#07141e;
+ text-align:center;
+ font-size:13px;
+ line-height:1.7;
+}
+
+@media(max-width:900px){
+ .grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:560px){
+ h1{font-size:30px}
+ .sub{font-size:15px}
+ .grid{grid-template-columns:1fr}
+ .desc{min-height:0}
+}
+</style>
+</head>
+
+<body>
+<main>
+
+<h1>回収率シミュレーター</h1>
+<div class="sub">
+入力するだけで、<span>回収率</span>がすぐ分かる！
+</div>
+
+<div class="grid">
+
+<div class="card blue">
+<h2>回収率計算</h2>
+<div class="desc">
+的中率・平均配当・点数を入力すると<br>
+回収率を計算します
+</div>
+
+<div class="row">
+<div class="label">的中率</div>
+<div class="input">
+<input id="hit1" type="number" value="17" step="0.1">
+<span class="unit">%</span>
+</div>
+</div>
+
+<div class="row">
+<div class="label">平均配当</div>
+<div class="input">
+<span>¥</span>
+<input id="pay1" type="number" value="35000">
+</div>
+</div>
+
+<div class="row">
+<div class="label">点数</div>
+<div class="input">
+<input id="pts1" type="number" value="32">
+<span class="unit">点</span>
+</div>
+</div>
+
+<div class="result">
+<div class="result-title">回収率</div>
+<div class="answer" id="ans1">186%</div>
+</div>
+</div>
+
+
+<div class="card green">
+<h2>平均配当計算</h2>
+<div class="desc">
+回収率・的中率・点数を入力すると<br>
+必要な平均配当を計算します
+</div>
+
+<div class="row">
+<div class="label">回収率</div>
+<div class="input">
+<input id="roi2" type="number" value="130">
+<span class="unit">%</span>
+</div>
+</div>
+
+<div class="row">
+<div class="label">的中率</div>
+<div class="input">
+<input id="hit2" type="number" value="35" step="0.1">
+<span class="unit">%</span>
+</div>
+</div>
+
+<div class="row">
+<div class="label">点数</div>
+<div class="input">
+<input id="pts2" type="number" value="16">
+<span class="unit">点</span>
+</div>
+</div>
+
+<div class="result">
+<div class="result-title">平均配当</div>
+<div class="answer" id="ans2">¥5,943</div>
+</div>
+</div>
+
+
+<div class="card purple">
+<h2>的中率計算</h2>
+<div class="desc">
+回収率・平均配当・点数を入力すると<br>
+必要な的中率を計算します
+</div>
+
+<div class="row">
+<div class="label">回収率</div>
+<div class="input">
+<input id="roi3" type="number" value="130">
+<span class="unit">%</span>
+</div>
+</div>
+
+<div class="row">
+<div class="label">平均配当</div>
+<div class="input">
+<span>¥</span>
+<input id="pay3" type="number" value="3500">
+</div>
+</div>
+
+<div class="row">
+<div class="label">点数</div>
+<div class="input">
+<input id="pts3" type="number" value="1">
+<span class="unit">点</span>
+</div>
+</div>
+
+<div class="result">
+<div class="result-title">的中率</div>
+<div class="answer" id="ans3">4%</div>
+</div>
+</div>
+
+
+<div class="card red">
+<h2>点数計算</h2>
+<div class="desc">
+回収率・平均配当・的中率を入力すると<br>
+買える点数を計算します
+</div>
+
+<div class="row">
+<div class="label">回収率</div>
+<div class="input">
+<input id="roi4" type="number" value="130">
+<span class="unit">%</span>
+</div>
+</div>
+
+<div class="row">
+<div class="label">平均配当</div>
+<div class="input">
+<span>¥</span>
+<input id="pay4" type="number" value="3500">
+</div>
+</div>
+
+<div class="row">
+<div class="label">的中率</div>
+<div class="input">
+<input id="hit4" type="number" value="15" step="0.1">
+<span class="unit">%</span>
+</div>
+</div>
+
+<div class="result">
+<div class="result-title">点数</div>
+<div class="answer" id="ans4">4点</div>
+</div>
+</div>
+
+</div>
+
+<div class="info">
+💡 数字を変更すると自動で計算します。<br>
+1点100円で計算しています。<br>
+競輪ゆっくり研究所
+</div>
+
+</main>
+
+<script>
+function num(id){
+ return Number(document.getElementById(id).value || 0);
+}
+
+function yen(x){
+ return "¥" + Math.round(x).toLocaleString("ja-JP");
+}
+
+function calc(){
+
+ let roi1 =
+ num("pts1") > 0
+ ? (num("hit1")/100*num("pay1"))/(num("pts1")*100)*100
+ : 0;
+
+ document.getElementById("ans1").textContent =
+ Math.round(roi1)+"%";
+
+
+ let pay2 =
+ num("hit2") > 0
+ ? (num("roi2")/100*num("pts2")*100)/(num("hit2")/100)
+ : 0;
+
+ document.getElementById("ans2").textContent =
+ yen(pay2);
+
+
+ let hit3 =
+ num("pay3") > 0
+ ? ((num("roi3")/100*num("pts3")*100)/num("pay3"))*100
+ : 0;
+
+ document.getElementById("ans3").textContent =
+ Math.round(hit3)+"%";
+
+
+ let pts4 =
+ num("roi4") > 0
+ ? (num("hit4")/100*num("pay4"))/(num("roi4")/100*100)
+ : 0;
+
+ document.getElementById("ans4").textContent =
+ Math.max(0,Math.floor(pts4))+"点";
+}
+
+document.querySelectorAll("input").forEach(function(input){
+ input.addEventListener("input",calc);
+ input.addEventListener("change",calc);
+});
+
+calc();
+</script>
+
+</body>
+</html>
